@@ -11,23 +11,26 @@
         <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
     </div>
 
-    <form class="row justify-content-center">
+    <form class="row justify-content-center" action="{{ route('users.update',$user->id) }}" method="post" enctype="multipart/form-data">
+        @csrf
+        @method('put')
         <div class="d-flex flex-column bd-highlight col-mb-3">
             <div class="form-group">
                 <label for="exampleFormControlFile1">アイコン編集</label>
-                <input type="file" class="form-control-file" id="exampleFormControlFile1">
+                <input type="file" class="form-control-file" name="icon" id="exampleFormControlFile1" >
             </div>
             <div class="form-group">
                 <label for="exampleInputEmail1">ユーザー名編集欄</label>
-                <input type="name" class="form-control" id="name" placeholder="ユーザー名">
+                <input type="text" class="form-control" name="name" id="name" placeholder="ユーザー名" value="{{ $user->name }}">
             </div>
             <div class="form-group  col-md-max">
                 <label for="exampleFormControlTextarea1">プロフィール編集欄</label>
-                <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
+                <textarea class="form-control" name="profile" id="exampleFormControlTextarea1" rows="3">{{ $user->profile }}</textarea>
+            </div>
+            <div class="form-group  col-md-max">
+                <button type="submit">更新</button>
             </div>
         </div>
     </form>        
-    <a href="{{ route('posts.index') }}" class="btn btn-primary" >編集完了</a>
-
 </div>
 @endsection

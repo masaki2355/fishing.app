@@ -28,5 +28,4 @@ Route::resource('users', 'UserController');
 
 
 Route::get('/', 'PostController@index');
-Route::get('/create', 'PostController@create');
 

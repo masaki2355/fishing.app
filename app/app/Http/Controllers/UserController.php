@@ -62,7 +62,10 @@ class UserController extends Controller
      */
     public function edit($id)
     {
-        return view('users.edit');
+        $user = User::find($id);
+        return view('users.edit',[
+            'user' => $user,
+        ]);
 
     }
 
@@ -75,7 +78,14 @@ class UserController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $icon = request()->file('icon')->getClientOriginalName();
+        request()->file('icon')->storeAs('' , $icon , 'public');
+        $user = User::find($id);
+        $user->name=$request->name;
+        $user->profile=$request->profile;
+        $user->icon=$icon;
+        $user->save();
+        return redirect()->route('users.show',$id);
     }
 
     /**
