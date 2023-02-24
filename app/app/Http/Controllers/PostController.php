@@ -4,6 +4,15 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 
+use App\User;
+
+use App\Post;
+
+use App\Comment;
+
+use Illuminate\Support\Facades\Auth;
+
+
 class PostController extends Controller
 {
     /**
@@ -13,7 +22,13 @@ class PostController extends Controller
      */
     public function index()
     {
-        return view('posts.index');
+
+        $post = new Post;
+        $all = $post->all()->toArray();
+        // dd($all);
+        return view('posts.index',[
+            'posts'=>$all,
+        ]);
     }
 
     /**
@@ -34,7 +49,17 @@ class PostController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $post = new Post;
+        $post->weather = $request->weather;
+        $post->user_id = Auth::id();
+        $post->tide = $request->tide;
+        $post->fishing_spot = $request->fishing_spot;
+        $post->post = $request->post;
+        $image = request()->file('image')->getClientOriginalName();
+        request()->file('image')->storeAs('' , $image , 'public');
+        $post->image=$image;
+        $post->save();
+        return redirect()->route('posts.index');
     }
 
     /**
@@ -45,7 +70,19 @@ class PostController extends Controller
      */
     public function show($id)
     {
-        return view('posts.show');
+        
+        $user = new User;
+        $post = new Post;
+        $comment = new Comment;
+
+        $date = $post->find($id);
+        $all = $comment->where('post_id',$date->id)->get();
+        
+
+        return view('posts.show',[
+            'date'=>$date,
+            'comments'=>$all,
+        ]);
     }
 
     /**
@@ -56,7 +93,13 @@ class PostController extends Controller
      */
     public function edit($id)
     {
-        //
+        
+        $post = new Post;
+        $date = $post->find($id);
+        // $date = Post::with('user')->get();
+        return view('posts.edit',[
+            'date'=>$date,
+        ]);
     }
 
     /**
@@ -68,7 +111,17 @@ class PostController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        // $image = request()->file('image')->getClientOriginalName();
+        // request()->file('image')->storeAs('' , $image , 'public');
+        
+        $post = Post::find($id);
+        $post->weather=$request->weather;
+        $post->tide=$request->tide;
+        $post->fishing_spot = $request->fishing_spot;
+        $post->post = $request->post;
+        // $post->icon=$icon;
+        $post->save();
+        return redirect()->route('posts.index');
     }
 
     /**
@@ -79,6 +132,9 @@ class PostController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $post = Post::find($id);
+        $post->delete();
+        return redirect('/');
     }
+
 }

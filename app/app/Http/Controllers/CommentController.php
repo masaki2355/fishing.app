@@ -4,9 +4,12 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 
-use App\User;
+use App\Comment;
 
-class UserController extends Controller
+use Illuminate\Support\Facades\Auth;
+
+
+class CommentController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -15,8 +18,7 @@ class UserController extends Controller
      */
     public function index()
     {
-        return view('users.index');
-
+        //
     }
 
     /**
@@ -37,7 +39,22 @@ class UserController extends Controller
      */
     public function store(Request $request)
     {
-        //
+
+
+    }
+
+    public function ajaxComment(Request $request){
+        $body = $request->body;
+        $user_id = Auth::id();
+        $post_id = $request->post_id;
+        $comments = Comment::create([
+            'body' => $body,
+            'user_id' => $user_id,
+            'post_id' => $post_id,
+        ]);
+        $json = ["comments" => $comments];
+        return response()->json($json);
+
     }
 
     /**
@@ -48,10 +65,7 @@ class UserController extends Controller
      */
     public function show($id)
     {
-        $user = User::find($id);
-        return view('users.show',[
-            'user' => $user,
-        ]);
+        // 
     }
 
     /**
@@ -62,12 +76,7 @@ class UserController extends Controller
      */
     public function edit($id)
     {
-        $user = User::find($id);
-        dd($user);
-        return view('users.edit',[
-            'user' => $user,
-        ]);
-
+        //
     }
 
     /**
@@ -79,14 +88,7 @@ class UserController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $icon = request()->file('icon')->getClientOriginalName();
-        request()->file('icon')->storeAs('' , $icon , 'public');
-        $user = User::find($id);
-        $user->name=$request->name;
-        $user->profile=$request->profile;
-        $user->icon=$icon;
-        $user->save();
-        return redirect()->route('users.show',$id);
+        //
     }
 
     /**

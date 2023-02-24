@@ -17,16 +17,21 @@
 
     <div class="row justify-content-center">
         <div class="post-area">
-            <div class="col-md-8">
-                <div class="card" style="width: 18rem;">
-                    <svg class="bd-placeholder-img card-img-top" width="100%" height="180" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice" focusable="false" role="img" aria-label="Placeholder: Image cap"><title>Placeholder</title><rect width="100%" height="100%" fill="#868e96"/><text x="50%" y="50%" fill="#dee2e6" dy=".3em">Image cap</text></svg>
-                    <div class="card-body">
-                        <h5 class="card-title">Card title</h5>
-                        <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                        <a href="{{ route('posts.show',1) }}" class="btn btn-primary">Go somewhere</a>
+            <div class="row justify-content-around pb-10">
+                    @foreach($posts as $post)
+                    <div class="card mx-3" style="width: 18rem;">
+                        <img class="bd-placeholder-img card-img-top" width="100%" height="180" src="{{ asset('storage/'.$post['image']) }}" preserveAspectRatio="xMidYMid slice" focusable="false" role="img" aria-label="Placeholder: Image cap"></img>
+                        <div class="card-body">
+                            <h5 class="card-title">天気：  {{ $post['weather'] }}</h5>
+                            <h5 class="card-title">潮汐：  {{ $post['tide'] }}</h5>
+                            <h5 class="card-title">釣り場： {{ $post['fishing_spot'] }}</h5>
+                            <h5 class="card-title">釣果： </h5>
+                            <p class="card-text">{{ $post['post'] }}</p>
+                            <a href="{{ route('posts.show',$post['id']) }}" class="btn btn-primary">詳細</a>
+                        </div>
                     </div>
+                    @endforeach
                 </div>
-            </div>
         </div>
     </div>
 

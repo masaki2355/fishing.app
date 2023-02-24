@@ -2,34 +2,79 @@
 
 @section('content')
 <div class="container">
-
-    <img src="https://picsum.photos/id/237/540/540" class="rounded-circle" width="100" higth="100">
+    <img src="{{ asset('storage/'.$date -> user()->icon) }}" class="rounded-circle" width="100" higth="100">
     <div class="row justify-content-center">
         <div class="comment-ard">
             <div class="col-md-8">
-                <div class="card" style="width: 18rem;">
-                    <svg class="bd-placeholder-img card-img-top" width="100%" height="180" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice" focusable="false" role="img" aria-label="Placeholder: Image cap"><title>Placeholder</title><rect width="100%" height="100%" fill="#868e96"/><text x="50%" y="50%" fill="#dee2e6" dy=".3em">Image cap</text></svg>
+                <div class="card" style="width: 34rem;">
+                    <img class="bd-placeholder-img card-img-top" width="100%" height="300"  src="{{ asset('storage/'.$date->image) }}" preserveAspectRatio="xMidYMid slice" focusable="false" role="img" aria-label="Placeholder: Image cap"></img>
                     <div class="card-body">
-                        <h5 class="card-title">Card title</h5>
-                        <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                        <h5 class="card-title">{{ $date->weather }}</h5>
+                        <h5 class="card-title">{{ $date->tide }}</h5>
+                        <h5 class="card-title">{{ $date->fishing_spot }}</h5>               
+                        <p class="card-text">{{ $date->post }}</p>
                     </div>
                 </div>
             </div>
         </div>
+        <div class="d-flex flex-column ">
+            <a href="{{ route('posts.edit', $date['id']) }}"><button type='button' class='btn btn-secondary' >編集</button></a>
+            <a href="{{ route('post.delete', $date['id']) }}"><button type='button' class='btn btn-danger' >削除</button></a>
+        </div>
     </div>
 
-    <div class="card-body row justify-content-center">
-        <div class="comment">コメント:</div>
-        <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+    <div class="ac d-flex flex-column  card-body row col-md-6 ">
+        @foreach($comments as $comment)
+        <div class="comment">作成日時:{{ $comment['created_at'] }}</div>
+        <div class="comment">コメント:{{ $comment['body'] }}</div>
+        @endforeach
     </div>
 
-    <form class="row justify-content-center">
-        <div class="form-group  col-md-4">
-            <label for="exampleFormControlTextarea1">コメント入力欄</label>
-            <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
+    <form class="row justify-content-center" action="{{ route('ajax.comment')}}" method="post">
+        @csrf
+        <div class="form-group  col-md-6">
+            <label for="body">コメント入力欄</label>
+            <textarea class="form-control" id="body" name="body" rows="3"></textarea>
+            <input type="hidden" id="post_id" name="post_id" value="{{ $date['id'] }}">
+            <button type='button' class='btn btn-primary w-25 mt-3 cbtn'>コメント投稿</button>
         </div>
     </form>        
-    <a href="{{ route('posts.index') }}" class="btn btn-primary" >投稿完了</a>
 
 </div>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+
+<script>
+    $('.cbtn').click(function() {
+        console.log('a');
+        var post_id = $('input[name="post_id"]').val();
+        var body = $('#body').val();
+    $.ajax({
+        headers: {
+          'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        },
+        url: "/result/ajax/",
+        dataType: "json",
+        type: 'POST',
+        data: {'body': body,
+                'post_id': post_id},
+        }).done(function (data) {
+                console.log(data);
+                var v = $("#body").val("");
+                    var html = `
+                                <div class="comment">作成日時:${data.comments.created_at}</div>
+                                <div class="comment">コメント:${data.comments.body}</div>
+                            `;
+                    $(".ac").prepend(html);
+        }).fail(function (jqXHR, textStatus, errorThrown) {
+                //通信が失敗したときの処理
+                $('#error_message').empty();
+                var text = $.parseJSON(jqXHR.responseText);
+                var errors = text.errors;
+                for (key in errors) {
+                    var errorMessage = errors[key][0];
+                    $('#error_message').append(`<li>${errorMessage}</li>`);
+                }
+        });
+    });
+</script>
 @endsection
