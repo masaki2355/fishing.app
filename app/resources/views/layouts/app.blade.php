@@ -65,9 +65,10 @@
                                     <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
                                         @csrf
                                     </form>
-                                    <a class="dropdown-item" href="{{ route('users.index') }}">ユーザー一覧</a>
+                                    @if( Auth::user()->role == 1 )
+                                    <a class="dropdown-item" href="{{ route('user.index') }}">ユーザー一覧</a>
+                                    @endif
                                     <a class="dropdown-item" href="{{ route('users.show',Auth::user()->id ) }}">マイページ</a>
-                                    <a class="dropdown-item" href="{{ route('user.index') }}">管理者用</a>
                                 </div>
                             </li>
                         @endguest
