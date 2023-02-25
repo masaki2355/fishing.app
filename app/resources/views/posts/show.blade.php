@@ -11,7 +11,15 @@
                     <div class="card-body">
                         <h5 class="card-title">{{ $date->weather }}</h5>
                         <h5 class="card-title">{{ $date->tide }}</h5>
-                        <h5 class="card-title">{{ $date->fishing_spot }}</h5>               
+                        <h5 class="card-title">{{ $date->fishing_spot }}</h5>   
+                        <h5 class="card-title">
+                            @foreach( $fish as $f )
+                            <span>
+                                {{ $f->fish }}
+                            </span>
+                            @endforeach
+                        </h5>   
+
                         <p class="card-text">{{ $date->post }}</p>
                     </div>
                 </div>

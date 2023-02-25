@@ -11,22 +11,43 @@ use App\Comment;
 
 class AdminController extends Controller
 {
-    public function userIndex(){
+    public function userIndex(Request $request){
         $user = User::all();
+                // ユーザー一覧をページネートで取得
+        $users = User::paginate(20);
+        // 検索フォームで入力された値を取得する
+        $search = $request->input('keyword');
+        $query = User::query();
+        if ($search) {
+
+        // 上記で取得した$queryをページネートにし、変数$usersに代入
+        $query->where('name','like',"%{$search}%");
+        }
+        $user = $query->get();
+
+        // ビューにusersとsearchを変数として渡す
         return view('admin.user_index',[
             'user' => $user,
+            'search' => $search,
+
         ]);
     }
 
-    public function commentIndex($id){
-        $comment = new Comment;
-        $user = new User;
+    public function commentIndex(Request $request, $id){
 
-        // $date = $comment->find($id);
-        $all = $comment->where('user_id',$id)->get();
+        $query = Comment::where('user_id',$id);
+        $search = $request->input('keyword');
+
+        if ($search) {
+            $query->where('body','like',"%{$search}%");
+        }
+        $comment = $query->get();
+
 
         return view('admin.comment_index',[
-            'comments' => $all,
+            'comments' => $comment,
+            'search' => $search,
+            'id' => $id
         ]);
     }
 

@@ -1,6 +1,17 @@
 @extends('layouts.app')
 
 @section('content')
+<form method="GET" action="{{ route('user.index') }}">
+    <div class="row justify-content-center">
+        <div class="input-group col-md-4">
+            <input type="text"name="keyword" id="txt-search" class="form-control input-group-prepend row justify-content-center" placeholder="ユーザー名を入力" value="{{ $search }}"></input>
+            <span class="input-group-btn input-group-append">
+                <button type="submit" id="btn-search" class="btn btn-primary"><i class="fas fa-search"></i> 検索</button>
+            </span>
+        </div>
+    </div>
+</form>
+
 <div class="container ">
     <div class="row justify-content-center">
         <table class="table">
@@ -25,6 +36,7 @@
         </table>
     </div>
 </div>
+
 
 @endsection
 

@@ -30,6 +30,13 @@
                 <label class="form-group" for="fishing_spot">釣り場編集欄</label>
                 <input type='text' class='form-control col-xs-4' id="fishing_spot" name='fishing_spot' value="{{ $date['fishing_spot'] }}"/>
             </div>
+            <div class="my-2" id="input_pluralBox">
+                <div id="input_plural">
+                    @foreach( $fish as $f )
+                    <input type="text" class="form-control my-2" name="fish[]" value="{{ $f['fish'] }}">
+                    @endforeach
+                </div>
+            </div>
             <div class="form-group col-md-max text-center">
                 <label class="form-group" for="post">投稿内容編集欄</label>
                 <textarea class="form-control" name="post" id="post" rows="3">{{ $date['post'] }}</textarea>
@@ -40,3 +47,17 @@
 
 </div>
 @endsection
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
+<script type="text/javascript">
+    $(document).on("click", ".add", function() {
+        $(this).parent().clone(true).insertAfter($(this).parent());
+    });
+    $(document).on("click", ".del", function() {
+        var target = $(this).parent();
+        if (target.parent().children().length > 1) {
+            target.remove();
+        }
+    });
+</script>
