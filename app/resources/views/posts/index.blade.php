@@ -27,10 +27,12 @@
                             <h5 class="card-title">天気：  {{ $post['weather'] }}</h5>
                             <h5 class="card-title">潮汐：  {{ $post['tide'] }}</h5>
                             <h5 class="card-title">釣り場： {{ $post['fishing_spot'] }}</h5>
-                            <h5 class="card-title">釣果：@foreach( $post->fish as $fish )
+                            <h5 class="card-title">釣果：@foreach( $fishes as $fish )
+                                @if($fish->post_id == $post->id)
                                 <span>
                                     {{ $fish->fish }}
                                 </span>
+                                @endif
                                 @endforeach
                             </h5>
                             <p class="card-text">{{ $post['post'] }}</p>

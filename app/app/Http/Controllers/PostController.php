@@ -27,7 +27,7 @@ class PostController extends Controller
     {
 
         $post = new Post;
-        $all = $post->with('fish');
+        $all = $post;
         
         
         $search = $request->input('keyword');
@@ -36,11 +36,12 @@ class PostController extends Controller
             orWhere('weather', 'like', "%{$search}%");
         }
         $post = $all->get();
-
+        $fishes = Fish::all();
+  
 
         return view('posts.index',[
             'posts'=>$post,
-        
+            'fishes'=>$fishes
         ]);
     }
 

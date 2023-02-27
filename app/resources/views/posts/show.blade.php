@@ -25,10 +25,12 @@
                 </div>
             </div>
         </div>
+        @if($date['user_id'] == Auth::user()->id)
         <div class="d-flex flex-column ">
             <a href="{{ route('posts.edit', $date['id']) }}"><button type='button' class='btn btn-secondary' >編集</button></a>
             <a href="{{ route('post.delete', $date['id']) }}"><button type='button' class='btn btn-danger' >削除</button></a>
         </div>
+        @endif
     </div>
 
     <div class="ac d-flex flex-column  card-body row col-md-6 ">
