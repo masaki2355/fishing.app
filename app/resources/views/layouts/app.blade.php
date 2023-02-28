@@ -7,7 +7,7 @@
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <title>{{ config('fishing', 'fishing') }}</title>
+    <title>{{ config('Fishing', 'Fishing') }}</title>
 
     <!-- Scripts -->
     <script src="{{ asset('js/app.js') }}" defer></script>
@@ -24,9 +24,10 @@
 </head>
 <body>
     <div>
-        <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm">
-            <div class="container">
+        <nav class="navbar navbar-expand-md navbar-light bg-primary shadow-sm ">
+            <div class="container ">
                 <a class="navbar-brand" href="{{ url('/') }}">
+                    <!-- <img src="../../../storage/app/public/logo.png"> -->
                     {{ config('fishing', 'fishing') }}
                 </a>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="{{ __('Toggle navigation') }}">
@@ -85,3 +86,10 @@
     </div>
 </body>
 </html>
+
+<!-- <style>
+    .navbar-brand{
+        background-image: url(logo.png); 
+        background-size: cover;
+    }
+</style> -->

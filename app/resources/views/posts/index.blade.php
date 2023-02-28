@@ -17,7 +17,7 @@
         </form>
 
         <div class="new-post row justify-content-end">
-            <a href="{{ route('posts.create') }}" class="btn btn-primary">新規登録</a>
+            <a href="{{ route('posts.create') }}" class="btn btn-success">新規登録</a>
         </div>
 
         <div class="row justify-content-center">
@@ -39,7 +39,7 @@
                                     @endforeach
                                 </h5>
                                 <p class="card-text">{{ $post['post'] }}</p>
-                                <a href="{{ route('posts.show',$post['id']) }}" class="btn btn-primary">詳細</a>
+                                <a href="{{ route('posts.show',$post['id']) }}" class="btn btn-warning">詳細</a>
                             </div>
                         </div>
                         @endforeach
@@ -51,3 +51,10 @@
     </div>
 </body>
 @endsection
+
+<style>
+    .post_index{
+        background-image: url(https://img.freepik.com/free-photo/fishing-tackle-fishing-spinning-fishing-line-hooks-and-lures-on-wooden-background_639032-1829.jpg?size=626&ext=jpg&ga=GA1.2.46583728.1677444019&semt=sph); 
+        background-size: cover;
+    }
+</style>

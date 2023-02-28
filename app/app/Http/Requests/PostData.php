@@ -24,13 +24,10 @@ class PostData extends FormRequest
     public function rules()
     {
         return [
-
                 'weather' => 'required|string',
                 'tide' => 'required|string',
                 'fishing_spot' => 'required|string',
-                $rules = [
-                    'fish' => 'required|string',
-                ],
+                'fish.*' => 'required|string',
                 'image' => 'required|mimes:jpeg,png,jpg',
                 'post' => 'required|max:200'
             ];

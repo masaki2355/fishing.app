@@ -27,9 +27,7 @@ class UpdateData extends FormRequest
             'weather' => 'required|string',
             'tide' => 'required|string',
             'fishing_spot' => 'required|string',
-            $rules = [
-                'fish' => 'required|string',
-            ],
+            'fish.*' => 'required|string',
             'post' => 'required|max:200',
         ];
     }

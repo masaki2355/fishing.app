@@ -1,46 +1,54 @@
 @extends('layouts.app')
 
 @section('content')
-<div class='panel-body'>
-    @if($errors->any())
-        <div class='alert alert-danger' >
-            <ul>
-                @foreach($errors->all() as $message)
-                <li>{{ $message }}</li>
-                @endforeach
-            </ul>
-        </div>
-    @endif
-</div>
-<form class="new-input row justify-content-center" action="{{ route('posts.store')}}" method="post" enctype="multipart/form-data">
-    @csrf
-
-    <div class="form-group col-md-5">
-        <label class="form-group col-md-5" for='weather'>天気</label>
-            <input type='text' class='form-control col-xs-4' id="weather" name='weather'/>
-        <label class="form-group col-md-5" for='tide'>潮汐</label>
-            <input type='text' class='form-control col-xs-4' id="tide" name='tide'/>
-        <label class="form-group col-md-5" for='fishing_spot'>釣り場</label>
-            <input type='text' class='form-control col-xs-4' id="fishing_spot" name='fishing_spot'/>
-        <label class="form-group col-md-5" for='fish'>釣果</label>
-
-        <div class="my-2" id="input_pluralBox">
-            <div id="input_plural">
-                <input type="text" class="form-control my-2" name="fish[]">
-                <input type="button" value="＋" class="add pluralBtn">
-                <input type="button" value="－" class="del pluralBtn">
+<body class="create">
+    <div class='panel-body'>
+        @if($errors->any())
+            <div class='alert alert-danger' >
+                <ul>
+                    @foreach($errors->all() as $message)
+                    <li>{{ $message }}</li>
+                    @endforeach
+                </ul>
             </div>
-        </div>
-        <div class="form-group">
-            <label for="image">写真</label>
-            <input type="file" class="form-control-file" name="image" id="image" >
-        </div>
-        <label for="post">新規投稿 入力欄</label>
-        <textarea class="form-control" id="post" rows="3" name='post'></textarea>
-        <button type='submit' class='btn btn-primary w-25 mt-3'>登録</button>
+        @endif
     </div>
-</form>
+    <form class="new-input row justify-content-center" action="{{ route('posts.store')}}" method="post" enctype="multipart/form-data">
+        @csrf
+
+        <div class="form-group col-md-5">
+            <label class="form-group col-md-5" for='weather'>天気</label>
+                <input type='text' class='form-control col-xs-4' id="weather" name='weather'/>
+            <label class="form-group col-md-5" for='tide'>潮汐</label>
+                <input type='text' class='form-control col-xs-4' id="tide" name='tide'/>
+            <label class="form-group col-md-5" for='fishing_spot'>釣り場</label>
+                <input type='text' class='form-control col-xs-4' id="fishing_spot" name='fishing_spot'/>
+            <label class="form-group col-md-5" for='fish'>釣果</label>
+
+            <div class="my-2" id="input_pluralBox">
+                <div id="input_plural">
+                    <input type="text" class="form-control my-2" name="fish[]">
+                    <input type="button" value="＋" class="add pluralBtn">
+                    <input type="button" value="－" class="del pluralBtn">
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="image">写真</label>
+                <input type="file" class="form-control-file" name="image" id="image" >
+            </div>
+            <label for="post">新規投稿 入力欄</label>
+            <textarea class="form-control" id="post" rows="3" name='post'></textarea>
+            <button type='submit' class='btn btn-primary w-25 mt-3'>登録</button>
+        </div>
+    </form>
+</body>
 @endsection
+<style>
+    .create{
+        background-image: url(https://img.freepik.com/free-photo/fishing-rod-with-yellow-fishing-bait-on-wooden-plank_23-2148189270.jpg?size=626&ext=jpg&ga=GA1.2.46583728.1677444019&semt=sph); 
+        background-size: cover;
+    }
+</style>
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 

@@ -150,7 +150,7 @@ return [
         'weather' => '天気',
         'tide' => '潮汐',
         'fishing_spot' => '釣り場',
-        'fish' => '釣果',
+        'fish.*' => '釣果',
         'image' => '画像',
         'post' => '投稿内容',
         'icon' => 'アイコン',

@@ -29,21 +29,29 @@ class PostController extends Controller
     public function index(Request $request)
     {
 
-        $post = new Post;
-        $all = $post;
+        $post = Post::query();
+
         
         
         $search = $request->input('keyword');
+
         if ($search) {
-        $all->where('fishing_spot','like',"%{$search}%")->
-            orWhere('weather', 'like', "%{$search}%");
+            $spaceConversion = mb_convert_kana($search, 's');
+
+            $wordArraySearched = preg_split('/[\s,]+/', $spaceConversion, -1, PREG_SPLIT_NO_EMPTY);
+
+            foreach($wordArraySearched as $value) {
+                $post->where('fishing_spot','like',"%{$value}%")->
+                orWhere('weather', 'like', "%{$value}%");
+            }
+
         }
-        $post = $all->get();
+        $posts = $post->get();
         $fishes = Fish::all();
   
 
         return view('posts.index',[
-            'posts'=>$post,
+            'posts'=>$posts,
             'fishes'=>$fishes
         ]);
     }
