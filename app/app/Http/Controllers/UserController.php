@@ -6,6 +6,8 @@ use Illuminate\Http\Request;
 
 use App\User;
 
+use App\Http\Requests\ProfileData;
+
 class UserController extends Controller
 {
     /**
@@ -63,7 +65,6 @@ class UserController extends Controller
     public function edit($id)
     {
         $user = User::find($id);
-        dd($user);
         return view('users.edit',[
             'user' => $user,
         ]);
@@ -77,7 +78,7 @@ class UserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(ProfileData $request, $id)
     {
         $icon = request()->file('icon')->getClientOriginalName();
         request()->file('icon')->storeAs('' , $icon , 'public');

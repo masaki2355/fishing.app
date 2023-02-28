@@ -10,10 +10,21 @@
         <div class="comment">プロフィール:</div>
         <p class="card-text"></p>
     </div>
-
+    <div class='panel-body'>
+        @if($errors->any())
+            <div class='alert alert-danger' >
+                <ul>
+                    @foreach($errors->all() as $message)
+                    <li>{{ $message }}</li>
+                    @endforeach
+                </ul>
+            </div>
+        @endif
+    </div>
     <form class="row justify-content-center" action="{{ route('users.update',$user->id) }}" method="post" enctype="multipart/form-data">
         @csrf
         @method('put')
+
         <div class="d-flex flex-column bd-highlight col-mb-3">
             <div class="form-group">
                 <label for="exampleFormControlFile1">アイコン編集</label>

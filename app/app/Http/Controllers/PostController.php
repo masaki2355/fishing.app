@@ -12,6 +12,9 @@ use App\Comment;
 
 use App\Fish;
 
+use App\Http\Requests\PostData;
+
+use App\Http\Requests\UpdateData;
 
 use Illuminate\Support\Facades\Auth;
 
@@ -61,7 +64,7 @@ class PostController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(PostData $request)
     {
 
         $post = new Post;
@@ -137,7 +140,7 @@ class PostController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(UpdateData $request, $id)
     {
         // $image = request()->file('image')->getClientOriginalName();
         // request()->file('image')->storeAs('' , $image , 'public');

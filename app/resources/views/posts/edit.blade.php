@@ -13,7 +13,17 @@
         </div>
     </div>
     
-
+    <div class='panel-body'>
+        @if($errors->any())
+            <div class='alert alert-danger' >
+                <ul>
+                    @foreach($errors->all() as $message)
+                    <li>{{ $message }}</li>
+                    @endforeach
+                </ul>
+            </div>
+        @endif
+    </div>
     <form class="row justify-content-center" action="{{ route('posts.update', $date['id']) }}" method="post">
         @csrf
         @method('put')
@@ -30,7 +40,8 @@
                 <label class="form-group" for="fishing_spot">釣り場編集欄</label>
                 <input type='text' class='form-control col-xs-4' id="fishing_spot" name='fishing_spot' value="{{ $date['fishing_spot'] }}"/>
             </div>
-            <div class="my-2" id="input_pluralBox">
+            <div class="form-group col-md-max text-center my-2" id="input_pluralBox">
+                <label class="form-group" for="fish[]">釣果編集欄</label>
                 <div id="input_plural">
                     @foreach( $fish as $f )
                     <input type="text" class="form-control my-2" name="fish[]" value="{{ $f['fish'] }}">

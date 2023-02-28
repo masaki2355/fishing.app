@@ -1,8 +1,20 @@
 @extends('layouts.app')
 
 @section('content')
+<div class='panel-body'>
+    @if($errors->any())
+        <div class='alert alert-danger' >
+            <ul>
+                @foreach($errors->all() as $message)
+                <li>{{ $message }}</li>
+                @endforeach
+            </ul>
+        </div>
+    @endif
+</div>
 <form class="new-input row justify-content-center" action="{{ route('posts.store')}}" method="post" enctype="multipart/form-data">
     @csrf
+
     <div class="form-group col-md-5">
         <label class="form-group col-md-5" for='weather'>天気</label>
             <input type='text' class='form-control col-xs-4' id="weather" name='weather'/>
